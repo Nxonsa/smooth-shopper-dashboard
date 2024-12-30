@@ -1,98 +1,76 @@
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Truck, MapPin, DollarSign, Star } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { MapPin, Coins, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryDashboard = () => {
-  const { toast } = useToast();
-  const [deliveries, setDeliveries] = useState([
+  const navigate = useNavigate();
+  const [deliveries] = useState([
     {
-      id: "1",
+      id: 1,
       storeName: "Store 1",
-      distance: "1.2km",
-      pay: "R50",
-      status: "pending",
-      rating: 4.5,
+      distance: "2.5km",
+      pay: 45,
+      rating: 4.8,
     },
     {
-      id: "2",
+      id: 2,
       storeName: "Store 2",
-      distance: "2.5km",
-      pay: "R75",
-      status: "pending",
-      rating: 4.8,
+      distance: "1.8km",
+      pay: 35,
+      rating: 4.5,
     },
   ]);
 
-  const handleAcceptDelivery = (deliveryId: string) => {
-    setDeliveries((prev) =>
-      prev.map((d) =>
-        d.id === deliveryId ? { ...d, status: "accepted" } : d
-      )
-    );
-    toast({
-      title: "Delivery Accepted",
-      description: "You have successfully accepted the delivery!",
-    });
+  const handleAcceptDelivery = (deliveryId: number) => {
+    console.log(`Accepted delivery ${deliveryId}`);
+    // In production, this would update the backend
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <main className="container mx-auto px-4 pt-20">
+      <main className="container mx-auto px-4 pt-20 pb-20">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Delivery Dashboard</h1>
-          <Button
-            variant="outline"
-            className="bg-[#FF6B6B] text-white hover:bg-[#FF6B6B]/90"
-            onClick={() => window.open("https://mediaowl.co.za", "_blank")}
-          >
-            Created by Media Owl
-          </Button>
+          <h1 className="text-3xl font-bold">Available Deliveries</h1>
+          <Button onClick={() => navigate("/delivery/dashboard")}>View Dashboard</Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {deliveries.map((delivery) => (
-            <Card
-              key={delivery.id}
-              className="hover:shadow-lg transition-shadow animate-fadeIn"
-            >
+            <Card key={delivery.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                  <span>{delivery.storeName}</span>
-                  <div className="flex items-center text-yellow-400">
-                    <Star className="w-4 h-4 mr-1" />
-                    {delivery.rating}
-                  </div>
-                </CardTitle>
+                <CardTitle>{delivery.storeName}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center justify-between">
                   <span className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1" />
+                    <MapPin className="h-4 w-4 mr-2" />
                     {delivery.distance}
                   </span>
                   <span className="flex items-center">
-                    <DollarSign className="w-4 h-4 mr-1" />
-                    {delivery.pay}
+                    <Star className="h-4 w-4 mr-2 text-yellow-400" />
+                    {delivery.rating}
                   </span>
                 </div>
-                {delivery.status === "pending" && (
-                  <Button
-                    onClick={() => handleAcceptDelivery(delivery.id)}
-                    className="w-full"
-                  >
-                    <Truck className="w-4 h-4 mr-2" />
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Coins className="h-4 w-4 mr-2" />
+                    R{delivery.pay}
+                  </span>
+                  <Button onClick={() => handleAcceptDelivery(delivery.id)}>
                     Accept Delivery
                   </Button>
-                )}
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

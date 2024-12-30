@@ -1,116 +1,61 @@
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  ShoppingBag,
-  Package,
-  CreditCard,
-  TrendingUp,
-  Flag,
-  MessageSquare,
-  Rocket,
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Coins, BarChart2, AlertTriangle, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const StoreOwnerDashboard = () => {
-  const { toast } = useToast();
-  const [products, setProducts] = useState([
-    {
-      id: "1",
-      name: "Product 1",
-      price: "R99.99",
-      status: "pending",
-      boosted: false,
-      image: "/placeholder.svg",
-      reactions: 12,
-      comments: 5,
-    },
-    {
-      id: "2",
-      name: "Product 2",
-      price: "R149.99",
-      status: "active",
-      boosted: true,
-      image: "/placeholder.svg",
-      reactions: 24,
-      comments: 8,
-    },
+  const navigate = useNavigate();
+  const [products] = useState([
+    { id: 1, name: "Product 1", price: 100, boostStatus: false },
+    { id: 2, name: "Product 2", price: 200, boostStatus: true },
   ]);
 
-  const handleBoost = (productId: string) => {
-    setProducts((prev) =>
-      prev.map((p) =>
-        p.id === productId ? { ...p, boosted: true } : p
-      )
-    );
-    toast({
-      title: "Product Boosted",
-      description: "Your product has been boosted successfully!",
-    });
+  const handleBoost = (productId: number) => {
+    console.log(`Boosting product ${productId} - Cost: R5.05 per click`);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <main className="container mx-auto px-4 pt-20">
+      <main className="container mx-auto px-4 pt-20 pb-20">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Store Dashboard</h1>
-          <Button
-            variant="outline"
-            className="bg-[#FF6B6B] text-white hover:bg-[#FF6B6B]/90"
-            onClick={() => window.open("https://mediaowl.co.za", "_blank")}
-          >
-            Created by Media Owl
-          </Button>
+          <Button onClick={() => navigate("/store/dashboard")}>View Dashboard</Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
-            <Card
-              key={product.id}
-              className="hover:shadow-lg transition-shadow animate-fadeIn"
-            >
+            <Card key={product.id}>
               <CardHeader>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-[150px] object-cover rounded-md"
-                />
+                <CardTitle>{product.name}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-lg">{product.name}</CardTitle>
-                  <span className="text-lg font-bold">{product.price}</span>
-                </div>
-                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                  <span className="flex items-center">
-                    <MessageSquare className="w-4 h-4 mr-1" />
-                    {product.comments}
-                  </span>
-                  <span className="flex items-center">
-                    <Flag className="w-4 h-4 mr-1" />
-                    {product.reactions}
-                  </span>
-                </div>
-                {!product.boosted && (
+                  <div className="flex items-center">
+                    <Coins className="h-4 w-4 mr-2" />
+                    <span>R{product.price}</span>
+                  </div>
                   <Button
                     onClick={() => handleBoost(product.id)}
-                    className="w-full"
-                    variant="outline"
+                    variant={product.boostStatus ? "secondary" : "default"}
                   >
-                    <Rocket className="w-4 h-4 mr-2" />
-                    Boost Post
+                    {product.boostStatus ? "Boosted" : "Boost - R5.05 per click"}
                   </Button>
-                )}
-                <div className="text-sm font-medium text-muted-foreground">
-                  Status: {product.status}
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+
+        <div className="mt-8">
+          <h2 className="text-xl font-bold mb-4">Pending Posts</h2>
+          {/* Add pending posts section */}
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };

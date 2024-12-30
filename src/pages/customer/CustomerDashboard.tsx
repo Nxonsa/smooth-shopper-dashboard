@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -44,19 +45,13 @@ const CustomerDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <main className="container mx-auto px-4 pt-20">
+      <main className="container mx-auto px-4 pt-20 pb-20">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">ThengeKasi</h1>
-          <Button
-            variant="outline"
-            className="bg-[#FF6B6B] text-white hover:bg-[#FF6B6B]/90"
-            onClick={() => window.open("https://mediaowl.co.za", "_blank")}
-          >
-            Created by Media Owl
-          </Button>
+          <Button onClick={() => navigate("/customer/dashboard")}>View Dashboard</Button>
         </div>
 
-        <section className="mb-8">
+        <section className="mb-8" style={{ height: "5vh" }}>
           <h2 className="text-xl font-semibold mb-4">Nearby Stores</h2>
           <ScrollArea className="w-full whitespace-nowrap rounded-md border">
             <div className="flex w-max space-x-4 p-4">
@@ -117,7 +112,7 @@ const CustomerDashboard = () => {
                         {product.estimatedTime}
                       </span>
                       <span className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
+                        <MapPin className="w-4 w-4 mr-1" />
                         {product.distance}
                       </span>
                     </div>
@@ -127,6 +122,7 @@ const CustomerDashboard = () => {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
