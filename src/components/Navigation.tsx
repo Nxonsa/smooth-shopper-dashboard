@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, ChevronDown, User, ShoppingBag, Truck, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -24,7 +26,9 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <span className="text-xl font-semibold">AdminDash</span>
+            <span className="text-xl font-semibold cursor-pointer" onClick={() => navigate("/")}>
+              SmoothShopper
+            </span>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -36,21 +40,21 @@ const Navigation = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem className="flex items-center space-x-2">
+                <DropdownMenuItem className="flex items-center space-x-2" onClick={() => navigate("/admin")}>
                   <User className="h-4 w-4" />
                   <span>Admin Dashboard</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center space-x-2">
+                <DropdownMenuItem className="flex items-center space-x-2" onClick={() => navigate("/store")}>
                   <ShoppingBag className="h-4 w-4" />
-                  <span>Store Management</span>
+                  <span>Store Dashboard</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center space-x-2">
-                  <Truck className="h-4 w-4" />
-                  <span>Delivery Management</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center space-x-2">
+                <DropdownMenuItem className="flex items-center space-x-2" onClick={() => navigate("/customer")}>
                   <BarChart2 className="h-4 w-4" />
-                  <span>Analytics</span>
+                  <span>Customer Dashboard</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center space-x-2" onClick={() => navigate("/delivery")}>
+                  <Truck className="h-4 w-4" />
+                  <span>Delivery Dashboard</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
