@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin, Star, ShoppingBag } from "lucide-react";
+import { Clock, MapPin, Star, ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CustomerDashboard = () => {
@@ -39,7 +39,6 @@ const CustomerDashboard = () => {
       distance: "1.8km",
       image: "/placeholder.svg",
     },
-    // Add more demo products
   ];
 
   return (
@@ -48,10 +47,17 @@ const CustomerDashboard = () => {
       <main className="container mx-auto px-4 pt-20 pb-20">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">ThengeKasi</h1>
-          <Button onClick={() => navigate("/customer/dashboard")}>View Dashboard</Button>
+          <div className="flex gap-4">
+            <Button variant="ghost" onClick={() => navigate("/customer/cart")}>
+              <ShoppingCart className="h-6 w-6" />
+            </Button>
+            <Button variant="ghost" onClick={() => navigate("/customer/profile")}>
+              <User className="h-6 w-6" />
+            </Button>
+          </div>
         </div>
 
-        <section className="mb-8" style={{ height: "5vh" }}>
+        <section className="mb-8 h-24">
           <h2 className="text-xl font-semibold mb-4">Nearby Stores</h2>
           <ScrollArea className="w-full whitespace-nowrap rounded-md border">
             <div className="flex w-max space-x-4 p-4">
@@ -80,7 +86,7 @@ const CustomerDashboard = () => {
           </ScrollArea>
         </section>
 
-        <section>
+        <section className="mt-32">
           <h2 className="text-xl font-semibold mb-4">
             {selectedStore
               ? `Products from ${
