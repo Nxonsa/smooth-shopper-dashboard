@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Coins, Users, ShoppingBag, AlertTriangle } from "lucide-react";
+import { PendingProductCard } from "@/components/admin/PendingProductCard";
 
 const AdminDashboard = () => {
   const [showUserBreakdown, setShowUserBreakdown] = useState(false);
@@ -160,31 +161,7 @@ const AdminDashboard = () => {
               ) : (
                 <div className="space-y-2">
                   {pendingProducts.map(product => (
-                    <div key={product.id} className="text-sm flex justify-between items-center">
-                      <span>{product.name}</span>
-                      <div className="space-x-2">
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toast.success(`${product.name} approved`);
-                          }}
-                        >
-                          Approve
-                        </Button>
-                        <Button 
-                          variant="destructive" 
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toast.error(`${product.name} rejected`);
-                          }}
-                        >
-                          Reject
-                        </Button>
-                      </div>
-                    </div>
+                    <PendingProductCard key={product.id} product={product} />
                   ))}
                 </div>
               )}
