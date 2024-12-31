@@ -41,25 +41,25 @@ const CustomerDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background">
       <Navigation />
       <main className="container mx-auto px-4 pt-24 pb-32">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-amber-800">Nearby Stores</h1>
+          <h1 className="text-3xl font-bold text-primary">Nearby Stores</h1>
           <div className="flex gap-4">
             <Button 
               variant="ghost" 
               onClick={() => navigate("/customer/cart")}
-              className="hover:bg-amber-100"
+              className="hover:bg-primary/20"
             >
-              <ShoppingCart className="h-6 w-6 text-amber-700" />
+              <ShoppingCart className="h-6 w-6 text-primary" />
             </Button>
             <Button 
               variant="ghost" 
               onClick={() => navigate("/customer/profile")}
-              className="hover:bg-amber-100"
+              className="hover:bg-primary/20"
             >
-              <User className="h-6 w-6 text-amber-700" />
+              <User className="h-6 w-6 text-primary" />
             </Button>
           </div>
         </div>
@@ -70,7 +70,7 @@ const CustomerDashboard = () => {
               <Card
                 key={store.id}
                 className={`w-[200px] cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                  selectedStore === store.id ? 'ring-2 ring-amber-500' : ''
+                  selectedStore === store.id ? 'ring-2 ring-primary' : ''
                 }`}
                 onClick={() => setSelectedStore(store.id)}
               >
@@ -80,10 +80,10 @@ const CustomerDashboard = () => {
                     alt={store.name}
                     className="w-full h-[120px] object-cover rounded-md mb-3"
                   />
-                  <div className="text-lg font-medium text-amber-900">{store.name}</div>
-                  <div className="flex items-center justify-between text-sm text-amber-700 mt-2">
+                  <div className="text-lg font-medium text-primary">{store.name}</div>
+                  <div className="flex items-center justify-between text-sm text-primary/80 mt-2">
                     <div className="flex items-center">
-                      <Star className="w-4 h-4 mr-1 text-amber-500" />
+                      <Star className="w-4 h-4 mr-1 text-primary" />
                       {store.rating}
                     </div>
                     <div className="flex items-center">
@@ -99,7 +99,7 @@ const CustomerDashboard = () => {
         </ScrollArea>
 
         <section className="mt-16">
-          <h2 className="text-2xl font-semibold text-amber-800 mb-6">
+          <h2 className="text-2xl font-semibold text-primary mb-6">
             {selectedStore
               ? `Products from ${nearbyStores.find((s) => s.id === selectedStore)?.name}`
               : "Available Products Nearby"}
@@ -110,7 +110,7 @@ const CustomerDashboard = () => {
               .map((product) => (
                 <Card
                   key={product.id}
-                  className="hover:shadow-lg transition-all duration-300 animate-fadeIn bg-white"
+                  className="hover:shadow-lg transition-all duration-300 animate-fadeIn bg-background"
                 >
                   <CardHeader>
                     <img
@@ -120,9 +120,9 @@ const CustomerDashboard = () => {
                     />
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <CardTitle className="text-amber-900">{product.name}</CardTitle>
-                    <div className="text-xl font-bold text-amber-700">{product.price}</div>
-                    <div className="flex items-center justify-between text-sm text-amber-600">
+                    <CardTitle className="text-primary">{product.name}</CardTitle>
+                    <div className="text-xl font-bold text-primary">{product.price}</div>
+                    <div className="flex items-center justify-between text-sm text-primary/80">
                       <span className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
                         {product.estimatedTime}
@@ -133,7 +133,7 @@ const CustomerDashboard = () => {
                       </span>
                     </div>
                     <Button 
-                      className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                       onClick={() => navigate(`/customer/product/${product.id}`)}
                     >
                       View Details
