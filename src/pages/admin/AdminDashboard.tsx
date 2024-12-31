@@ -10,6 +10,7 @@ const AdminDashboard = () => {
   const [showOrderBreakdown, setShowOrderBreakdown] = useState(false);
   const [showRevenueBreakdown, setShowRevenueBreakdown] = useState(false);
   const [showReportBreakdown, setShowReportBreakdown] = useState(false);
+  const [showPendingProducts, setShowPendingProducts] = useState(false);
 
   const userStats = {
     deliveryDrivers: 100,
@@ -44,6 +45,18 @@ const AdminDashboard = () => {
     products: 12,
     customers: 5
   };
+
+  const pendingProducts = [
+    {
+      id: 1,
+      name: "Product 1",
+      store: "Store A",
+      price: 299.99,
+      category: "Electronics",
+      status: "pending"
+    },
+    // Add more pending products as needed
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -131,6 +144,48 @@ const AdminDashboard = () => {
                   <div className="text-sm">Driver Reports: {reportStats.deliveryDrivers}</div>
                   <div className="text-sm">Product Reports: {reportStats.products}</div>
                   <div className="text-sm">Customer Reports: {reportStats.customers}</div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          
+          <Card className="cursor-pointer" onClick={() => setShowPendingProducts(!showPendingProducts)}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Pending Products</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              {!showPendingProducts ? (
+                <div className="text-2xl font-bold">{pendingProducts.length}</div>
+              ) : (
+                <div className="space-y-2">
+                  {pendingProducts.map(product => (
+                    <div key={product.id} className="text-sm flex justify-between items-center">
+                      <span>{product.name}</span>
+                      <div className="space-x-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toast.success(`${product.name} approved`);
+                          }}
+                        >
+                          Approve
+                        </Button>
+                        <Button 
+                          variant="destructive" 
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toast.error(`${product.name} rejected`);
+                          }}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </CardContent>
