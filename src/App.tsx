@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PinDialog from "./components/PinDialog";
 import Index from "./pages/Index";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import StoreOwnerDashboard from "./pages/store/StoreOwnerDashboard";
@@ -27,14 +28,15 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!pin) {
-    const userPin = prompt("Please enter access PIN:");
+  const handlePinSubmit = (userPin: string) => {
     if (userPin === "00085") {
       localStorage.setItem("accessPin", userPin);
       setPin(userPin);
-    } else {
-      return <div>Access denied. Invalid PIN.</div>;
     }
+  };
+
+  if (!pin) {
+    return <PinDialog onPinSubmit={handlePinSubmit} />;
   }
 
   return (
